@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Knowledge Base + AI Chat — Gustav Johansson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0b; --surface: #141413; --border: #252522;
+      --muted: #555550; --text: #e8e6df;
+      --accent: #e8a23a; --accent2: #4fc9a4;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; z-index: 9999; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    nav.scrolled { background: rgba(12,12,11,0.92); border-color: var(--border); backdrop-filter: blur(12px); }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+    .nav-back { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-back:hover { color: var(--text); }
+
+    .project-hero { padding: 10rem 4rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 100% 100% at 0% 0%, black 20%, transparent 70%); opacity: 0.25; }
+    .project-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent2); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.7s 0.1s forwards; }
+    .project-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 400; letter-spacing: -0.02em; max-width: 20ch; line-height: 1.05; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .project-hero h1 em { font-style: italic; color: var(--accent2); }
+    .project-meta { margin-top: 2.5rem; display: flex; gap: 3rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
+    .meta-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .meta-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text); }
+    .meta-value a { color: var(--accent2); text-decoration: none; }
+    .meta-value a:hover { text-decoration: underline; }
+
+    .project-content { max-width: 860px; margin: 0 auto; padding: 5rem 4rem; }
+    .project-content > * + * { margin-top: 2rem; }
+
+    .media-grid { display: grid; gap: 1.5px; }
+    .media-grid.cols-1 { grid-template-columns: 1fr; }
+    .media-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .media-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .media-item { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+    .media-item img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .media-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .media-caption { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); padding: 0.6rem 0.8rem; letter-spacing: 0.06em; border-top: 1px solid var(--border); }
+    .media-placeholder { aspect-ratio: 16/9; background: var(--surface); border: 1px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+    .media-placeholder span { font-size: 2rem; }
+
+    .prose h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+    .prose p { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+    .prose p + p { margin-top: 1rem; }
+    .prose strong { color: var(--text); font-weight: 500; }
+    .prose ul { color: var(--muted); padding-left: 1.5rem; }
+    .prose ul li { margin-bottom: 0.4rem; }
+    .prose ul li strong { color: var(--text); font-weight: 500; }
+
+    .tag-list { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; letter-spacing: 0.06em; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    .next-project { border-top: 1px solid var(--border); padding: 4rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .next-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .project-hero, .project-content, .next-project, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .media-grid.cols-2, .media-grid.cols-3 { grid-template-columns: 1fr; }
+      .project-meta { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a class="nav-logo" href="../../">GJ.dev</a>
+    <a class="nav-back" href="../../#projects">← Back to projects</a>
+  </nav>
+
+  <div class="project-hero">
+    <div class="hero-bg"></div>
+    <p class="project-eyebrow">Full-Stack / AI · 2025</p>
+    <h1>PDF Knowledge Base + <em>AI Chat</em></h1>
+    <div class="project-meta">
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">System Engineer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Context</span>
+        <span class="meta-value">Trafikverket R&D</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Stack</span>
+        <span class="meta-value">Electron · Python · PostgreSQL · Ollama</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-content">
+
+    <div class="media-grid cols-1">
+      <div class="media-item">
+        <!--
+          TO ADD AN IMAGE:  <img src="assets/screenshot.png" alt="App screenshot">
+          TO ADD A VIDEO:
+          <video controls poster="assets/thumb.jpg">
+            <source src="assets/demo.mp4" type="video/mp4">
+          </video>
+        -->
+        <div class="media-placeholder">
+          <span>💬</span>
+          Drop your app screenshot in assets/ and update the HTML above
+        </div>
+        <p class="media-caption">// Main chat interface — replace with your screenshot</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="prose">
+      <h2>Overview</h2>
+      <p>
+        Built a <strong>full-stack desktop application</strong> for Trafikverket's R&D lab to solve a
+        real problem: a growing archive of PDF documents that were hard to search and navigate.
+        The app ingests PDFs, indexes them in a PostgreSQL database, and lets users find and query
+        documents using a built-in AI chat powered by a locally-running LLM.
+      </p>
+
+      <h3>// The problem</h3>
+      <p>
+        Describe what the situation was before — too many documents, manual search, specific pain
+        points the team had. What was the trigger for building this?
+      </p>
+
+      <h3>// Architecture</h3>
+      <ul>
+        <li><strong>Frontend:</strong> Electron app with a web-based UI, running locally on Windows/Linux</li>
+        <li><strong>Backend:</strong> Python (FastAPI or similar) handling scraping, PDF parsing, and LLM orchestration</li>
+        <li><strong>Database:</strong> PostgreSQL storing document metadata, chunk embeddings, and search indices</li>
+        <li><strong>AI:</strong> Ollama running a local LLM for RAG-style question answering — no data leaves the machine</li>
+      </ul>
+
+      <h3>// Key features</h3>
+      <ul>
+        <li>Automatic <strong>PDF scraping and ingestion</strong> from configured sources</li>
+        <li><strong>Semantic search</strong> across the full document corpus</li>
+        <li><strong>AI Q&A</strong> — ask questions in natural language, get answers with source citations</li>
+        <li>Fully <strong>offline / air-gapped</strong> — no external API calls, suitable for sensitive environments</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <div class="media-grid cols-2">
+      <div class="media-item">
+        <div class="media-placeholder"><span>🗄️</span>Database schema diagram</div>
+        <p class="media-caption">// PostgreSQL schema</p>
+      </div>
+      <div class="media-item">
+        <div class="media-placeholder"><span>🤖</span>Search results screenshot</div>
+        <p class="media-caption">// Semantic search in action</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="prose">
+      <h3>// Tech stack</h3>
+    </div>
+    <div class="tag-list">
+      <span class="tag">Electron</span>
+      <span class="tag">Python</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">Ollama</span>
+      <span class="tag">RAG</span>
+      <span class="tag">pgvector</span>
+      <span class="tag">PDF parsing</span>
+      <span class="tag">Linux</span>
+    </div>
+
+    <hr class="divider">
+
+    <div class="prose">
+      <h2>What I learned</h2>
+      <p>
+        Describe what surprised you — e.g. chunking strategy for PDFs, tradeoffs in embedding models,
+        Electron IPC patterns, or anything about running LLMs locally. Be concrete.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="next-project">
+    <div>
+      <p class="next-label">Next project</p>
+      <p class="next-title">Low-Latency Video Distribution</p>
+    </div>
+    <a href="../video-distribution/" class="btn btn-outline">View project →</a>
+  </div>
+
+  <footer>
+    <span>© 2025 Gustav Johansson</span>
+    <span>Linköping, Sweden</span>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+  </script>
+</body>
+</html>

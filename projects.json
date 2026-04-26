@@ -1,0 +1,44 @@
+[
+  {
+    "id": "lidar-drone",
+    "title": "LiDAR Drone",
+    "tagline": "🥈 2nd place at LiU Game Awards 2025 — a Godot game built around LiDAR-based mechanics",
+    "description": "A game developed for the TDDD23 game programming course at Linköping University. Selected as a finalist and awarded 2nd place at LiU Game Awards 2025, presented at East Sweden Game Summit.",
+    "tags": ["Godot", "GDScript", "Game Dev", "LiDAR"],
+    "category": "Game Dev",
+    "year": "2025",
+    "employer": "LiU — TDDD23",
+    "folder": "lidar-drone",
+    "thumbnail": "projects/lidar-drone/assets/thumb.jpg",
+    "github": "https://github.com/kalaspuffarna/lidar_game",
+    "demo": "https://www.youtube.com/watch?v=rMQAEXVJHpU"
+  },
+  {
+    "id": "video-distribution",
+    "title": "Low-Latency Video Distribution",
+    "tagline": "Real-time video streaming over Raspberry Pi nodes at Trafikverket R&D",
+    "description": "Designed and implemented a low-latency video distribution system using Raspberry Pi devices. Evaluated transport protocols and video codecs to optimise real-time performance for Trafikverket's R&D lab.",
+    "tags": ["Python", "Raspberry Pi", "Networking", "Video Codecs"],
+    "category": "Systems / Embedded",
+    "year": "2025",
+    "employer": "Trafikverket",
+    "folder": "video-distribution",
+    "thumbnail": "projects/video-distribution/assets/thumb.jpg",
+    "github": "",
+    "demo": ""
+  },
+  {
+    "id": "electron-pdf-tool",
+    "title": "PDF Knowledge Base + AI Chat",
+    "tagline": "Full-stack Electron app with semantic search powered by a local LLM",
+    "description": "Built a full-stack Electron and Python application with a PostgreSQL backend to scrape, organise, and serve PDF documents. Integrated an AI chatbot via Ollama for semantic search and question answering over the document corpus.",
+    "tags": ["Electron", "Python", "PostgreSQL", "Ollama", "AI"],
+    "category": "Full-Stack / AI",
+    "year": "2025",
+    "employer": "Trafikverket",
+    "folder": "electron-pdf-tool",
+    "thumbnail": "projects/electron-pdf-tool/assets/thumb.jpg",
+    "github": "",
+    "demo": ""
+  }
+]

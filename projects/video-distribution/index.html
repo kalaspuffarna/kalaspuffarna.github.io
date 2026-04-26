@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Low-Latency Video Distribution — Gustav Johansson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0b; --surface: #141413; --border: #252522;
+      --muted: #555550; --text: #e8e6df;
+      --accent: #e8a23a; --accent2: #4fc9a4;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; z-index: 9999; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    nav.scrolled { background: rgba(12,12,11,0.92); border-color: var(--border); backdrop-filter: blur(12px); }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+    .nav-back { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-back:hover { color: var(--text); }
+
+    /* HERO */
+    .project-hero { padding: 10rem 4rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 100% 100% at 0% 0%, black 20%, transparent 70%); opacity: 0.25; }
+    .project-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.7s 0.1s forwards; }
+    .project-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 400; letter-spacing: -0.02em; max-width: 20ch; line-height: 1.05; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .project-hero h1 em { font-style: italic; color: var(--accent); }
+    .project-meta { margin-top: 2.5rem; display: flex; gap: 3rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+    .meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
+    .meta-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .meta-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text); }
+    .meta-value a { color: var(--accent); text-decoration: none; }
+    .meta-value a:hover { text-decoration: underline; }
+
+    /* CONTENT */
+    .project-content { max-width: 860px; margin: 0 auto; padding: 5rem 4rem; }
+    .project-content > * + * { margin-top: 2rem; }
+
+    /* MEDIA */
+    .media-grid { display: grid; gap: 1.5px; }
+    .media-grid.cols-1 { grid-template-columns: 1fr; }
+    .media-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .media-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .media-item { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+    .media-item img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .media-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .media-caption { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); padding: 0.6rem 0.8rem; letter-spacing: 0.06em; border-top: 1px solid var(--border); }
+
+    /* PLACEHOLDER (remove once you have real media) */
+    .media-placeholder { aspect-ratio: 16/9; background: var(--surface); border: 1px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+    .media-placeholder span { font-size: 2rem; }
+
+    /* TEXT */
+    .prose h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .prose h3 { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+    .prose p { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+    .prose p + p { margin-top: 1rem; }
+    .prose strong { color: var(--text); font-weight: 500; }
+    .prose ul { color: var(--muted); padding-left: 1.5rem; }
+    .prose ul li { margin-bottom: 0.4rem; }
+    .prose ul li strong { color: var(--text); font-weight: 500; }
+
+    /* TAGS */
+    .tag-list { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; letter-spacing: 0.06em; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* NEXT PROJECT */
+    .next-project { border-top: 1px solid var(--border); padding: 4rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .next-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); border: 1px solid var(--accent); }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .project-hero, .project-content, .next-project, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .media-grid.cols-2, .media-grid.cols-3 { grid-template-columns: 1fr; }
+      .project-meta { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a class="nav-logo" href="../../">GJ.dev</a>
+    <a class="nav-back" href="../../#projects">← Back to projects</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="project-hero">
+    <div class="hero-bg"></div>
+    <p class="project-eyebrow">Systems / Embedded · 2025</p>
+    <h1>Low-Latency <em>Video</em> Distribution</h1>
+    <div class="project-meta">
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">System Engineer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Context</span>
+        <span class="meta-value">Trafikverket R&D</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Stack</span>
+        <span class="meta-value">Python · Raspberry Pi · GStreamer</span>
+      </div>
+      <!-- Uncomment when you have a repo
+      <div class="meta-item">
+        <span class="meta-label">Source</span>
+        <span class="meta-value"><a href="https://github.com/kalaspuffarna/...">GitHub →</a></span>
+      </div>
+      -->
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="project-content">
+
+    <!-- COVER IMAGE or VIDEO — replace placeholder with your actual media -->
+    <div class="media-grid cols-1">
+      <div class="media-item">
+        <!--
+          TO ADD AN IMAGE:  replace the div below with:
+          <img src="assets/overview.jpg" alt="System overview">
+
+          TO ADD A VIDEO:   replace the div below with:
+          <video controls poster="assets/thumb.jpg">
+            <source src="assets/demo.mp4" type="video/mp4">
+          </video>
+        -->
+        <div class="media-placeholder">
+          <span>🎥</span>
+          Drop your screenshot or video in assets/ and update the HTML above
+        </div>
+        <p class="media-caption">// System overview — replace with your screenshot</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- DESCRIPTION -->
+    <div class="prose">
+      <h2>Overview</h2>
+      <p>
+        As part of Trafikverket's R&D lab, I designed and built a <strong>low-latency video distribution
+        system</strong> running on a network of Raspberry Pi devices. The goal was to find a practical
+        solution for distributing real-time video feeds with minimal end-to-end delay, suitable for
+        infrastructure monitoring use cases.
+      </p>
+
+      <h3>// The problem</h3>
+      <p>
+        Describe the specific problem you were solving here. What were the latency requirements?
+        How many nodes? What were the constraints (bandwidth, hardware, existing infrastructure)?
+      </p>
+
+      <h3>// What I built</h3>
+      <ul>
+        <li>Evaluated and benchmarked <strong>multiple transport protocols</strong> (RTP/UDP, WebRTC, RTSP, SRT) for latency and reliability characteristics</li>
+        <li>Compared <strong>video codecs</strong> (H.264, H.265, AV1) under constrained network conditions</li>
+        <li>Implemented a <strong>Python-based distribution pipeline</strong> using GStreamer for encoding, transport, and decoding</li>
+        <li>Deployed and tested across a multi-node Raspberry Pi cluster</li>
+      </ul>
+
+      <h3>// Results</h3>
+      <p>
+        Add concrete numbers here — e.g. end-to-end latency achieved, comparison against baseline,
+        number of simultaneous streams, etc.
+      </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ADDITIONAL MEDIA (2-up grid) — add more as needed -->
+    <div class="media-grid cols-2">
+      <div class="media-item">
+        <div class="media-placeholder"><span>📊</span>Latency benchmark chart</div>
+        <p class="media-caption">// Protocol latency comparison</p>
+      </div>
+      <div class="media-item">
+        <div class="media-placeholder"><span>🔧</span>Hardware setup photo</div>
+        <p class="media-caption">// Raspberry Pi cluster</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- TECH STACK -->
+    <div class="prose">
+      <h3>// Tech stack</h3>
+    </div>
+    <div class="tag-list">
+      <span class="tag">Python</span>
+      <span class="tag">GStreamer</span>
+      <span class="tag">Raspberry Pi</span>
+      <span class="tag">RTP / SRT</span>
+      <span class="tag">H.264 / H.265</span>
+      <span class="tag">Linux</span>
+      <span class="tag">Networking</span>
+    </div>
+
+    <hr class="divider">
+
+    <!-- REFLECTIONS -->
+    <div class="prose">
+      <h2>What I learned</h2>
+      <p>
+        Write honestly about what surprised you, what you'd do differently,
+        and what skills this project sharpened. Recruiters love this section.
+      </p>
+    </div>
+
+  </div><!-- /project-content -->
+
+  <!-- NEXT PROJECT -->
+  <div class="next-project">
+    <div>
+      <p class="next-label">Next project</p>
+      <p class="next-title">PDF Knowledge Base + AI Chat</p>
+    </div>
+    <a href="../electron-pdf-tool/" class="btn btn-outline">View project →</a>
+  </div>
+
+  <footer>
+    <span>© 2025 Gustav Johansson</span>
+    <span>Linköping, Sweden</span>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+  </script>
+</body>
+</html>

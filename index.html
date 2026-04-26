@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name — Software Engineer</title>
+  <title>Gustav Johansson — Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -19,9 +19,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -30,8 +28,6 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
-
-    /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -41,7 +37,7 @@
       z-index: 9999;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
@@ -50,328 +46,130 @@
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s, background 0.3s;
     }
-    nav.scrolled {
-      background: rgba(12, 12, 11, 0.92);
-      border-color: var(--border);
-      backdrop-filter: blur(12px);
-    }
-    .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
+    nav.scrolled { background: rgba(12,12,11,0.92); border-color: var(--border); backdrop-filter: blur(12px); }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .nav-links a { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
 
-    /* ── HERO ── */
+    /* HERO */
     #hero {
       min-height: 100vh;
       display: flex; flex-direction: column; justify-content: center;
       padding: 0 4rem;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .hero-grid {
       position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
       opacity: 0.35;
     }
-    .hero-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-    h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 8vw, 7.5rem);
-      line-height: 1.02;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      max-width: 14ch;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.35s forwards;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-    .hero-sub {
-      margin-top: 2rem;
-      max-width: 48ch;
-      color: var(--muted);
-      font-size: 1.05rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.5s forwards;
-    }
-    .hero-cta {
-      margin-top: 3rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.65s forwards;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.75rem;
-      border-radius: 2px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      border: 1px solid var(--accent);
-    }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 8vw, 7.5rem); line-height: 1.02; font-weight: 400; letter-spacing: -0.02em; max-width: 14ch; opacity: 0; animation: fadeUp 0.8s 0.35s forwards; }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { margin-top: 2rem; max-width: 48ch; color: var(--muted); font-size: 1.05rem; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
+    .hero-cta { margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.65s forwards; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); border: 1px solid var(--accent); }
     .btn-primary:hover { background: transparent; color: var(--accent); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+    .hero-scroll { position: absolute; bottom: 2.5rem; left: 4rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 1rem; opacity: 0; animation: fadeUp 0.8s 0.9s forwards; }
+    .hero-scroll::before { content: ''; display: block; width: 40px; height: 1px; background: var(--muted); }
 
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 4rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      display: flex; align-items: center; gap: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.9s forwards;
-    }
-    .hero-scroll::before {
-      content: '';
-      display: block;
-      width: 40px; height: 1px;
-      background: var(--muted);
-    }
-
-    /* ── SECTIONS ── */
+    /* SECTIONS */
     section { padding: 7rem 4rem; }
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
-      line-height: 1.1;
-    }
+    .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 3rem; line-height: 1.1; }
 
-    /* ── ABOUT ── */
+    /* ABOUT */
     #about { border-top: 1px solid var(--border); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
     .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1.05rem; }
     .about-text p strong { color: var(--text); font-weight: 500; }
     .about-links { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    .skills-list {
-      display: flex; flex-direction: column; gap: 1.5rem;
-    }
+    .skills-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .skill-row { display: flex; flex-direction: column; gap: 0.4rem; }
-    .skill-header {
-      display: flex; justify-content: space-between;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-    }
+    .skill-header { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.06em; }
     .skill-header span:first-child { color: var(--text); }
     .skill-header span:last-child  { color: var(--muted); }
-    .skill-bar {
-      height: 2px;
-      background: var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .skill-fill {
-      position: absolute; left: 0; top: 0; bottom: 0;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    .skill-bar { height: 2px; background: var(--border); position: relative; overflow: hidden; }
+    .skill-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .skill-fill.teal { background: var(--accent2); }
     .skill-fill.red  { background: var(--danger); }
 
-    /* ── PROJECTS ── */
+    /* PROJECTS */
     #projects { border-top: 1px solid var(--border); }
-    .projects-header {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 3rem;
-    }
+    .projects-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
     .projects-header h2 { margin-bottom: 0; }
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5px;
-      border: 1.5px solid var(--border);
-    }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5px; border: 1.5px solid var(--border); }
+
+    /* PROJECT CARD */
     .project-card {
       background: var(--surface);
-      padding: 2rem;
-      border: none;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
       transition: background 0.25s;
       text-decoration: none;
-      display: block;
+      display: flex; flex-direction: column;
       color: inherit;
     }
-    .project-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      border: 1.5px solid var(--border);
-      pointer-events: none;
-    }
+    .project-card::after { content: ''; position: absolute; inset: 0; border: 1.5px solid var(--border); pointer-events: none; }
     .project-card:hover { background: #1a1a18; }
     .project-card:hover .project-arrow { transform: translate(4px, -4px); color: var(--accent); }
-    .project-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 1.2rem;
-    }
-    .project-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
-    }
-    .project-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
-    .project-footer {
-      margin-top: 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .project-stack {
-      display: flex; gap: 0.5rem; flex-wrap: wrap;
-    }
-    .tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.67rem;
-      padding: 0.2rem 0.55rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 2px;
-      letter-spacing: 0.06em;
-    }
-    .project-arrow {
-      font-size: 1.1rem;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
 
-    /* ── EXPERIENCE ── */
-    #experience { border-top: 1px solid var(--border); }
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 3rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
+    .project-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--border);
+      overflow: hidden;
       position: relative;
     }
-    .timeline-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      padding-top: 0.25rem;
+    .project-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .project-card:hover .project-thumb img { transform: scale(1.04); }
+    .project-thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.1em;
     }
+
+    .project-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+    .project-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); margin-bottom: 1.2rem; }
+    .project-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+    .project-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; flex: 1; }
+    .project-footer { margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .project-stack { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 0.67rem; padding: 0.2rem 0.55rem; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; letter-spacing: 0.06em; }
+    .project-arrow { font-size: 1.1rem; color: var(--muted); transition: all 0.2s; }
+
+    /* EXPERIENCE */
+    #experience { border-top: 1px solid var(--border); }
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .timeline-meta { font-family: 'DM Mono', monospace; font-size: 0.75rem; padding-top: 0.25rem; }
     .timeline-period { color: var(--muted); letter-spacing: 0.06em; display: block; margin-bottom: 0.4rem; }
     .timeline-company { color: var(--accent); letter-spacing: 0.08em; }
-    .timeline-content h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin-bottom: 0.75rem;
-    }
-    .timeline-content p { color: var(--muted); font-size: 0.92rem; }
-    .timeline-content ul {
-      margin-top: 0.75rem;
-      padding-left: 1.2rem;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
+    .timeline-content h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.75rem; }
+    .timeline-content ul { margin-top: 0.75rem; padding-left: 1.2rem; color: var(--muted); font-size: 0.92rem; }
     .timeline-content ul li { margin-bottom: 0.35rem; }
     .timeline-content ul li strong { color: var(--text); font-weight: 500; }
 
-    /* ── CONTACT ── */
-    #contact {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 7rem 4rem 8rem;
-    }
+    /* CONTACT */
+    #contact { border-top: 1px solid var(--border); text-align: center; padding: 7rem 4rem 8rem; }
     #contact h2 { font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 1.5rem; }
     #contact p { color: var(--muted); max-width: 46ch; margin: 0 auto 3rem; font-size: 1.05rem; }
-    .contact-links {
-      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
-    }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 4rem;
-      display: flex; justify-content: space-between; align-items: center;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { display: none; }
@@ -385,9 +183,8 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav id="navbar">
-    <a class="nav-logo" href="#">YN.dev</a>
+    <a class="nav-logo" href="#">GJ.dev</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -396,14 +193,14 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-grid"></div>
-    <p class="hero-eyebrow">// Available for opportunities</p>
-    <h1>Your <em>Name</em> Here</h1>
+    <p class="hero-eyebrow">// Computer Engineering · Linköping University</p>
+    <h1>Gustav <em>Johansson</em></h1>
     <p class="hero-sub">
-      Software engineer who builds performant, thoughtful systems.
-      Passionate about clean architecture, developer experience, and solving hard problems.
+      Software engineer building real systems — from low-latency video pipelines
+      to AI-powered document tools. Currently working at Trafikverket R&D while
+      finishing my BSc.
     </p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -412,27 +209,29 @@
     <span class="hero-scroll">Scroll to explore</span>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="about-grid">
       <div class="about-text reveal">
         <p class="section-label">// About me</p>
-        <h2>Building things that <em>matter</em></h2>
+        <h2>Systems thinker, <em>builder</em> at heart</h2>
         <p>
-          I'm a software engineer based in <strong>Your City</strong>, with a focus on
-          backend systems, APIs, and making complex things simple.
+          I'm a <strong>Computer Engineering student at Linköping University</strong>,
+          specialising in software development with a side of embedded systems.
+          I like understanding how things work from the ground up — whether that's
+          a network protocol, a video codec, or an OS scheduler.
         </p>
         <p>
-          I graduated from <strong>Your University</strong> with a degree in
-          Computer Science / Engineering. I care deeply about code quality,
-          good documentation, and shipping work that actually helps people.
+          Alongside my studies I work as a <strong>System Engineer at Trafikverket's
+          R&D lab</strong>, where I design and build proof-of-concepts in areas
+          ranging from real-time video streaming to AI-assisted document search.
         </p>
         <p>
-          When I'm not coding, you'll find me <strong>hiking, reading, or tinkering
-          with side projects</strong>.
+          I'm especially drawn to <strong>IT security, systems programming, and
+          developer tooling</strong>. I enjoy challenges that require both
+          analytical depth and clean implementation.
         </p>
         <div class="about-links">
-          <a href="https://github.com/yourusername" class="btn btn-outline" target="_blank">GitHub</a>
+          <a href="https://github.com/kalaspuffarna" class="btn btn-outline" target="_blank">GitHub</a>
           <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline" target="_blank">LinkedIn</a>
           <a href="resume.pdf" class="btn btn-outline" download>Resume PDF</a>
         </div>
@@ -440,155 +239,94 @@
 
       <div class="skills-list reveal" style="transition-delay: 0.15s">
         <p class="section-label">// Skills & stack</p>
-
         <div class="skill-row">
-          <div class="skill-header"><span>Python / Django / FastAPI</span><span>Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="--w: 90%"></div></div>
+          <div class="skill-header"><span>C++ / C</span><span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
         </div>
         <div class="skill-row">
-          <div class="skill-header"><span>TypeScript / Node.js</span><span>Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill teal" style="--w: 85%"></div></div>
+          <div class="skill-header"><span>Python</span><span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-fill teal" style="--w:85%"></div></div>
         </div>
         <div class="skill-row">
-          <div class="skill-header"><span>React / Next.js</span><span>Proficient</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="--w: 75%"></div></div>
+          <div class="skill-header"><span>SQL / PostgreSQL</span><span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:75%"></div></div>
         </div>
         <div class="skill-row">
-          <div class="skill-header"><span>PostgreSQL / Redis</span><span>Proficient</span></div>
-          <div class="skill-bar"><div class="skill-fill teal" style="--w: 80%"></div></div>
+          <div class="skill-header"><span>Linux / Git / Sysadmin</span><span>Proficient</span></div>
+          <div class="skill-bar"><div class="skill-fill teal" style="--w:80%"></div></div>
         </div>
         <div class="skill-row">
-          <div class="skill-header"><span>Docker / Kubernetes / CI-CD</span><span>Familiar</span></div>
-          <div class="skill-bar"><div class="skill-fill red" style="--w: 65%"></div></div>
+          <div class="skill-header"><span>Electron / JavaScript</span><span>Familiar</span></div>
+          <div class="skill-bar"><div class="skill-fill red" style="--w:60%"></div></div>
         </div>
         <div class="skill-row">
-          <div class="skill-header"><span>Rust</span><span>Learning</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="--w: 40%"></div></div>
+          <div class="skill-header"><span>Embedded / ASM / Godot</span><span>Familiar</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="--w:55%"></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="projects-header reveal">
       <div>
         <p class="section-label">// Selected work</p>
         <h2>Projects</h2>
       </div>
-      <a href="https://github.com/yourusername" class="btn btn-outline" target="_blank">All on GitHub →</a>
+      <a href="https://github.com/kalaspuffarna" class="btn btn-outline" target="_blank">All on GitHub →</a>
     </div>
-
-    <div class="project-grid">
-
-      <!-- Project 1 -->
-      <a href="https://github.com/yourusername/project-one" class="project-card reveal" target="_blank">
-        <p class="project-tag">Web App</p>
-        <h3>Project One</h3>
-        <p>A short, punchy description of what this project does and why it exists. What problem does it solve?</p>
-        <div class="project-footer">
-          <div class="project-stack">
-            <span class="tag">Python</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">PostgreSQL</span>
-          </div>
-          <span class="project-arrow">↗</span>
-        </div>
-      </a>
-
-      <!-- Project 2 -->
-      <a href="https://github.com/yourusername/project-two" class="project-card reveal" target="_blank">
-        <p class="project-tag">CLI Tool</p>
-        <h3>Project Two</h3>
-        <p>Describe the core functionality. Mention scale if relevant — e.g. handles X requests/sec or used by N users.</p>
-        <div class="project-footer">
-          <div class="project-stack">
-            <span class="tag">Rust</span>
-            <span class="tag">CLI</span>
-          </div>
-          <span class="project-arrow">↗</span>
-        </div>
-      </a>
-
-      <!-- Project 3 -->
-      <a href="https://github.com/yourusername/project-three" class="project-card reveal" target="_blank">
-        <p class="project-tag">Library / OSS</p>
-        <h3>Project Three</h3>
-        <p>Open source library or tool. What gap in the ecosystem does it fill? Link to docs or npm/pypi if relevant.</p>
-        <div class="project-footer">
-          <div class="project-stack">
-            <span class="tag">TypeScript</span>
-            <span class="tag">Node.js</span>
-          </div>
-          <span class="project-arrow">↗</span>
-        </div>
-      </a>
-
-      <!-- Project 4 -->
-      <a href="https://github.com/yourusername/project-four" class="project-card reveal" target="_blank">
-        <p class="project-tag">Machine Learning</p>
-        <h3>Project Four</h3>
-        <p>What data, what model, what outcome? Keep it concrete. Mention accuracy or metric if you have one.</p>
-        <div class="project-footer">
-          <div class="project-stack">
-            <span class="tag">Python</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">HuggingFace</span>
-          </div>
-          <span class="project-arrow">↗</span>
-        </div>
-      </a>
-
+    <!-- Cards injected by JS from projects.json -->
+    <div class="project-grid" id="project-grid">
+      <div style="padding:3rem; font-family:'DM Mono',monospace; font-size:0.8rem; color:var(--muted); grid-column:1/-1; text-align:center;">
+        Loading projects…
+      </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <p class="section-label reveal">// Career</p>
     <h2 class="reveal">Experience</h2>
-
     <div class="timeline">
 
       <div class="timeline-item reveal">
         <div class="timeline-meta">
-          <span class="timeline-period">2023 — Present</span>
-          <span class="timeline-company">Company Name</span>
+          <span class="timeline-period">Jan 2025 — Present</span>
+          <span class="timeline-company">Trafikverket</span>
         </div>
         <div class="timeline-content">
-          <h3>Software Engineer II</h3>
+          <h3>System Engineer — R&D Lab</h3>
           <ul>
-            <li>Led migration of monolith to <strong>microservices</strong>, cutting deployment time by 40%</li>
-            <li>Built and maintained <strong>internal tooling</strong> used by 30+ engineers daily</li>
-            <li>Mentored two junior engineers and led bi-weekly tech talks</li>
+            <li>Designed a <strong>low-latency video distribution system</strong> over Raspberry Pi nodes, evaluating transport protocols and codecs for real-time performance</li>
+            <li>Built a full-stack <strong>Electron + Python app</strong> with PostgreSQL backend for scraping, organising, and serving PDF documents</li>
+            <li>Integrated a <strong>local LLM (Ollama)</strong> for semantic search and Q&A over the document corpus</li>
+            <li>Set up a <strong>Mattermost instance</strong> with reverse proxy and DNS hosting</li>
           </ul>
         </div>
       </div>
 
       <div class="timeline-item reveal">
         <div class="timeline-meta">
-          <span class="timeline-period">2021 — 2023</span>
-          <span class="timeline-company">Previous Co.</span>
+          <span class="timeline-period">2018 — Aug 2023</span>
+          <span class="timeline-company">Propoint</span>
         </div>
         <div class="timeline-content">
-          <h3>Junior Software Engineer</h3>
+          <h3>Warehouse & Assembly Worker</h3>
           <ul>
-            <li>Worked on the <strong>core API</strong> serving 500k daily active users</li>
-            <li>Implemented end-to-end feature from design doc to production</li>
-            <li>Improved test coverage from 42% to 78% across core modules</li>
+            <li>Operated forklifts and processed orders in high-volume warehouse environment</li>
           </ul>
         </div>
       </div>
 
       <div class="timeline-item reveal">
         <div class="timeline-meta">
-          <span class="timeline-period">Summer 2020</span>
-          <span class="timeline-company">Some Startup</span>
+          <span class="timeline-period">Aug 2023 — Present</span>
+          <span class="timeline-company">Linköping University</span>
         </div>
         <div class="timeline-content">
-          <h3>Engineering Intern</h3>
+          <h3>BSc Computer Engineering</h3>
           <ul>
-            <li>Built a data pipeline processing <strong>2M records/day</strong> using Spark and Airflow</li>
-            <li>Delivered full-stack feature shipped to production before internship ended</li>
+            <li>Specialising in <strong>software development</strong> with coursework in embedded systems — 180 credits</li>
+            <li>Interested in IT security, digital forensics, and systems programming</li>
           </ul>
         </div>
       </div>
@@ -596,59 +334,91 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <p class="section-label reveal">// Let's connect</p>
     <h2 class="reveal">Got a project in mind?</h2>
     <p class="reveal">
-      I'm always open to interesting work, collaborations, or just a good
-      conversation about tech. Drop me a line.
+      Open to thesis collaborations, internships, and interesting engineering problems.
+      Drop me a line.
     </p>
     <div class="contact-links reveal">
-      <a href="mailto:you@example.com" class="btn btn-primary">Email Me</a>
-      <a href="https://github.com/yourusername" class="btn btn-outline" target="_blank">GitHub</a>
+      <a href="mailto:gustavlajohansson@gmail.com" class="btn btn-primary">Email Me</a>
+      <a href="https://github.com/kalaspuffarna" class="btn btn-outline" target="_blank">GitHub</a>
       <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline" target="_blank">LinkedIn</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    <span>© 2025 Your Name</span>
-    <span>Built with HTML / CSS / JS · Hosted on GitHub Pages</span>
+    <span>© 2025 Gustav Johansson</span>
+    <span>Linköping, Sweden · GitHub Pages</span>
   </footer>
 
   <script>
-    // Navbar scroll effect
+    // Navbar scroll
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
 
     // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-    revealEls.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Skill bar animations on reveal
-    const skillObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.skill-fill').forEach(bar => {
-            bar.style.transform = `scaleX(${parseFloat(bar.style.getPropertyValue('--w')) / 100})`;
-          });
-          skillObserver.unobserve(entry.target);
+    // Skill bars
+    const skillObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-fill').forEach(b => b.style.transform = `scaleX(${parseFloat(b.style.getPropertyValue('--w')) / 100})`);
+          skillObs.unobserve(e.target);
         }
       });
     }, { threshold: 0.3 });
-    document.querySelectorAll('.skills-list').forEach(el => skillObserver.observe(el));
-  </script>
+    document.querySelectorAll('.skills-list').forEach(el => skillObs.observe(el));
 
+    // Load projects from projects.json
+    async function loadProjects() {
+      const grid = document.getElementById('project-grid');
+      try {
+        const res = await fetch('projects.json');
+        const projects = await res.json();
+        grid.innerHTML = '';
+        projects.forEach((p, i) => {
+          const hasThumb = p.thumbnail;
+          const thumbHtml = hasThumb
+            ? `<img src="${p.thumbnail}" alt="${p.title}" onerror="this.parentElement.innerHTML='<div class=\\'project-thumb-placeholder\\'>${p.category}</div>'">`
+            : `<div class="project-thumb-placeholder">${p.category}</div>`;
+
+          const linksHtml = [
+            p.github ? `<a href="${p.github}" target="_blank" class="btn btn-outline" style="padding:0.4rem 0.9rem;font-size:0.7rem;" onclick="event.stopPropagation()">GitHub</a>` : '',
+            p.demo   ? `<a href="${p.demo}"   target="_blank" class="btn btn-outline" style="padding:0.4rem 0.9rem;font-size:0.7rem;" onclick="event.stopPropagation()">Demo</a>` : ''
+          ].join('');
+
+          const card = document.createElement('a');
+          card.className = 'project-card reveal';
+          card.style.transitionDelay = `${i * 0.08}s`;
+          card.href = `projects/${p.folder}/`;
+          card.innerHTML = `
+            <div class="project-thumb">${thumbHtml}</div>
+            <div class="project-body">
+              <p class="project-tag">${p.category} · ${p.year}</p>
+              <h3>${p.title}</h3>
+              <p>${p.tagline}</p>
+              <div class="project-footer">
+                <div class="project-stack">
+                  ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                </div>
+                <span class="project-arrow">↗</span>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+          observer.observe(card);
+        });
+      } catch (e) {
+        grid.innerHTML = `<p style="padding:2rem;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Could not load projects.json — make sure you're running this via a local server or GitHub Pages, not file://</p>`;
+      }
+    }
+    loadProjects();
+  </script>
 </body>
 </html>
