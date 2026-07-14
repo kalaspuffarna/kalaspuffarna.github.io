@@ -46,7 +46,7 @@
     .media-grid { display: grid; gap: 1.5px; }
     .media-grid.cols-2 { grid-template-columns: 1fr 1fr; }
     .media-item { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
-    .media-item img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .media-item img, .media-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
     .media-caption { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); padding: 0.6rem 0.8rem; letter-spacing: 0.06em; border-top: 1px solid var(--border); }
     .media-placeholder { aspect-ratio: 16/9; background: var(--surface); border: 1px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
     .media-placeholder span { font-size: 2rem; }
@@ -196,15 +196,11 @@
 
     <div class="media-grid cols-2">
       <div class="media-item">
-        <!--
-          Replace with: <img src="assets/screenshot1.png" alt="LiDAR scan in action">
-          Tip: grab frames directly from the trailer using a YouTube screenshot tool
-        -->
-        <div class="media-placeholder"><span>📡</span>LiDAR scan — add to assets/</div>
+        <video src="assets/lidar-scan.mp4" autoplay loop muted playsinline></video>
         <p class="media-caption">// In-game scan view</p>
       </div>
       <div class="media-item">
-        <div class="media-placeholder"><span>👾</span>Monster encounter — add to assets/</div>
+        <video src="assets/monster-encounter.mp4" autoplay loop muted playsinline></video>
         <p class="media-caption">// Enemy encounter</p>
       </div>
     </div>
